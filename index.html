@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        #note-textbox {
+            width: 80%;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+
+        #download-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #download-canvas {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+     
+    <h1>Notes to Image</h1>
+
+    <textarea id="note-textbox" placeholder="Write your notes here...   Website Developed and All Rights Reserved for this website to Sanjeev Kumar Singh"></textarea>
+
+    <canvas id="download-canvas"></canvas>
+
+    <button id="download-btn" onclick="downloadNotes()">Download as Image</button> 
+
+    <img src="C:\Users\SANJEEV SINGH\Downloads\6757397cebeba9cc0c7efd99dcceef9c.gif" width="700" height="300"   align="centre">
+
+    <script>
+        function downloadNotes() {
+            // Get the value from the textarea
+            var noteText = document.getElementById("note-textbox").value;
+
+            // Split the text into lines
+            var lines = noteText.split('\n');
+
+            // Get the canvas element
+            var canvas = document.getElementById("download-canvas");
+
+            // Set the canvas size to match the textarea size
+            canvas.width = document.getElementById("note-textbox").offsetWidth;
+            canvas.height = document.getElementById("note-textbox").offsetHeight;
+
+            var context = canvas.getContext("2d");
+
+            // Clear the canvas
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw each line separately
+            context.font = "14px Arial";
+            context.fillStyle = "#000"; // Set the text color
+
+            for (var i = 0; i < lines.length; i++) {
+                context.fillText(lines[i], 10, 20 + i * 20);
+            }
+
+            // Convert the canvas content to a data URL
+            var dataUrl = canvas.toDataURL("image/png");
+
+            // Create a link element
+            var link = document.createElement("a");
+
+            // Set the download attribute with a filename
+            link.download = "notes.png";
+
+            // Set the href attribute of the link to the data URL
+            link.href = dataUrl;
+
+            // Append the link to the document
+            document.body.appendChild(link);
+
+            // Trigger a click event on the link to start the download
+            link.click();
+
+            // Remove the link from the document
+            document.body.removeChild(link);
+        }
+    </script>
+
+</body>
+</html>
